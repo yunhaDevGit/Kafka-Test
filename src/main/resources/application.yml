@@ -9,3 +9,19 @@ spring:
     producer:
       bootstrap-servers: localhost:9092
       #key-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+message:
+  topic:
+    name: mytopic
+
+greeting:
+  topic:
+    name: greeting
+
+partitioned:
+  topic:
+    name: partitioned
+
+filtered:
+  topic:
+    name: filtered
