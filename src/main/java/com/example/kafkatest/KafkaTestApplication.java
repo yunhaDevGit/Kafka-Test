@@ -23,7 +23,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 public class KafkaTestApplication {
 
   public static void main(String[] args) throws Exception {
-    ConfigurableApplicationContext context = SpringApplication.run(KafkaTestApplication.class);
+    ConfigurableApplicationContext context = SpringApplication.run(KafkaTestApplication.class, args);
 
     MessageProducer producer = context.getBean(MessageProducer.class);
     MessageListener listener = context.getBean(MessageListener.class);
@@ -35,10 +35,6 @@ public class KafkaTestApplication {
       producer.sendMessageToPartition("Hello To Partitioned Topic", i);
     }
     listener.partitionLatch.await(10, TimeUnit.SECONDS);
-
-    producer.sendMessageToFiltered("Hello Baeldung");
-    producer.sendMessageToFiltered("Hello World");
-    listener.filterLatch.await(10, TimeUnit.SECONDS);
 
     producer.sendMessageToFiltered("Hello Baeldung");
     producer.sendMessageToFiltered("Hello World");
@@ -120,9 +116,16 @@ public class KafkaTestApplication {
       latch.countDown();
     }
 
+    @KafkaListener(topics = "${message.topic.name}", groupId = "bar", containerFactory = "fooKafkaListenerContainerFactory")
+    public void listenGroupBar(String message) {
+      System.out.println("Received Message in group 'bar' : " + message);
+      latch.countDown();
+    }
+
     @KafkaListener(topics = "${message.topic.name}", containerFactory = "headersKafkaListenerContainerFactory")
     public void listenWithHeaders(@Payload String message, @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition) {
       System.out.println("Recieved Message: " + message + " from partition: " + partition);
+      latch.countDown();
     }
 
     @KafkaListener(topicPartitions = @TopicPartition(topic = "${partitioned.topic.name}", partitions = {"0", "3"}), containerFactory = "partitionsKafkaListenerContainerFactory")

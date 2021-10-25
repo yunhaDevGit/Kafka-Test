@@ -13,6 +13,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
 @EnableKafka
 @Configuration
@@ -54,6 +55,13 @@ public class KafkaConsumerConfig {
   @Bean
   public ConcurrentKafkaListenerContainerFactory<String, String> partitionsKafkaListenerContainerFactory() {
     return kafkaListenerContainerFactory("partitions");
+  }
+
+  @Bean
+  public ConcurrentKafkaListenerContainerFactory<String, String> filterKafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, String> factory = kafkaListenerContainerFactory("filter");
+    factory.setRecordFilterStrategy(record -> record.value().contains("world"));
+    return factory;
   }
 
   public ConsumerFactory<String, Greeting> greetingConsumerFactory() {

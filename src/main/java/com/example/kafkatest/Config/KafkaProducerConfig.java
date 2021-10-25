@@ -1,7 +1,7 @@
 package com.example.kafkatest.Config;
 
 import com.example.kafkatest.Model.Greeting;
-import com.fasterxml.jackson.databind.JsonSerializer;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -28,8 +28,12 @@ public class KafkaProducerConfig {
         bootstrapAddress
     );
     configProps.put(
+        ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
+        StringSerializer.class
+    );
+    configProps.put(
         ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-        StringTokenizer.class
+        StringSerializer.class
     );
     return new DefaultKafkaProducerFactory<>(configProps);
   }
@@ -51,5 +55,4 @@ public class KafkaProducerConfig {
   public KafkaTemplate<String, Greeting> greetingKafkaTemplate() {
     return new KafkaTemplate<>(greetingProducerFactory());
   }
-
 }
