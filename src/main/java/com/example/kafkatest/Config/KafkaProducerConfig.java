@@ -39,7 +39,7 @@ public class KafkaProducerConfig {
 
   @Bean
   public KafkaTemplate<String,String> kafkaTemplate() {
-    return new KafkaTemplate<String, String>(producerFactory());
+    return new KafkaTemplate<>(producerFactory());
   }
 
   public ProducerFactory<String, Greeting> greetingProducerFactory() {
