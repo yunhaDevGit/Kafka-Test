@@ -1,6 +1,6 @@
 # Kafka-Test
-Spring Boot 와 Kafka 연동 예제입니다. 
-Docker
+Spring Boot 와 Kafka 연동 예제입니다.
+Docker를 사용하여 kafka 설치 및 실행 후 Spring Boot와 연동하였습니다. 
 
 
 ## Kafka 설치 및 실행 (with Docker)
