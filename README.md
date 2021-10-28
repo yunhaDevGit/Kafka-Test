@@ -63,11 +63,7 @@ _kafka 바이러니 파일 다운로드 경로_
 
 [https://kafka.apache.org/downloads](https://kafka.apache.org/downloads)
 
- [Apache Kafka
 
-Apache Kafka: A Distributed Streaming Platform.
-
-kafka.apache.org](https://kafka.apache.org/downloads)
 
 ```
 # kafka 바이너리 파일 압축 풀 경로로 이동
